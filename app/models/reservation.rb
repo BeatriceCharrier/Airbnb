@@ -1,20 +1,21 @@
 class Reservation < ApplicationRecord
-    validates :start_date :presence => { :message => "must be a valid date" }
-    validates :end_date, :presence => {:message => "must be a valid date"}
-    validates :start_must_be_before_end_date
-  def start_must_be_before_end_date
+    attr_accessor :time
+
+    validates :start_date, presence: true #, availability: true
+    validates :end_date, presence: true
+    validate :start_date_must_be_before_end_date
+
+    def start_date_must_be_before_end_date
     errors.add(:start_date, "must be before end date") unless
        start_date < end_date
-  end 
+    end 
 
-  def duration
-    @duration = end_date.to_i - start_date.to_i
-  end
-  validates :duration
-  numericality: { greater_than : 0 },
+    def duration
+      @time = self.end_date - self.start_date
+      @time = Time.at(@time).utc.strftime("%d")
+      puts "duration #{@time}"
+    end
 
-  belongs_to :guest, class_name: "User"
-  belongs_to :accomodation
-
+    #belongs_to :guest, class_name: "User"
+    #belongs_to :accomodation
 end
-
