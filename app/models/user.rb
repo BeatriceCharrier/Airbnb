@@ -9,9 +9,8 @@ class User < ApplicationRecord
     uniqueness: true, 
     format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "please enter a valid email" }
 
-    has_many :reservations
-    has_many :accomodations
+    has_many :admin, foreign_key: 'admin_id', class_name: 'Accommodation'
+    has_many :guest, foreign_key: 'guest_id', class_name: 'Reservation'
+    belongs_to :city
 
 end
-
-

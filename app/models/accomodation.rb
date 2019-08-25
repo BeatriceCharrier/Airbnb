@@ -14,10 +14,9 @@ class Accomodation < ApplicationRecord
     validates :welcome_message,
     presence: true
 
-    #belongs_to :admin, class_name: "User"
-    #belongs_to :city
+    belongs_to :admin, class_name: "User"
+    belongs_to :city
+    has_many :reservations, dependent: :destroy
 
-    has_many :reservations
 end
 
-  

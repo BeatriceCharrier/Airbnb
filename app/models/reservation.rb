@@ -16,6 +16,13 @@ class Reservation < ApplicationRecord
       puts "duration #{@time}"
     end
 
-    #belongs_to :guest, class_name: "User"
-    #belongs_to :accomodation
+    def overlaping_reservation?(booking)
+      @houses = Accomodation.find(booking.accomodation.id)
+      @houses.reservations.each do |resa|
+        if booking.start_date >= resa.start_date && booking.end_date <= resa.end_date
+        end
+    end
+
+    belongs_to :guest, class_name: "User"
+    belongs_to :accomodation
 end

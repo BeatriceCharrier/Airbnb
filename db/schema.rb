@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_20_140648) do
+ActiveRecord::Schema.define(version: 2019_08_25_153355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 2019_08_20_140648) do
     t.text "welcome_message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.bigint "admin_id"
+    t.index ["admin_id"], name: "index_accomodations_on_admin_id"
+    t.index ["city_id"], name: "index_accomodations_on_city_id"
   end
 
   create_table "cities", force: :cascade do |t|
@@ -37,6 +41,10 @@ ActiveRecord::Schema.define(version: 2019_08_20_140648) do
     t.datetime "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "guest_id"
+    t.bigint "accomodation_id"
+    t.index ["accomodation_id"], name: "index_reservations_on_accomodation_id"
+    t.index ["guest_id"], name: "index_reservations_on_guest_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,6 +53,11 @@ ActiveRecord::Schema.define(version: 2019_08_20_140648) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "city_id"
+    t.index ["city_id"], name: "index_users_on_city_id"
   end
 
+  add_foreign_key "accomodations", "cities"
+  add_foreign_key "reservations", "accomodations"
+  add_foreign_key "users", "cities"
 end
