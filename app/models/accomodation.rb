@@ -1,15 +1,23 @@
 class Accomodation < ApplicationRecord
-    validates :name,
-    numericality: { greater_than : 0 },
+    validates :available_beds,
     presence :true
+    numericality: { only_integer: true , greater_than : 0 },
+    
 
     validates :price,
-    numericality: { greater_than : 0 },
-    numericality: { only_integer: true },
-    presence :true
+    presence :true,
+    numericality: { only_integer: true, greater_than : 0 },
 
-    validates :description, length: { minimum: 140 }
+    validates :description, 
+    presence :true, 
+    length: { minimum: 140 }
 
     validates :welcome_message,
     presence :true
+
+    belongs_to :admin, class_name: "User"
+    has_many :reservations
+    belongs_to :city
 end
+
+  

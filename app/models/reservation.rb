@@ -13,5 +13,8 @@ class Reservation < ApplicationRecord
   validates :duration
   numericality: { greater_than : 0 },
 
-  
+  belongs_to :guest, class_name: "User"
+  belongs_to :accomodation
+
 end
+

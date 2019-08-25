@@ -8,4 +8,8 @@ class User < ApplicationRecord
     presence :true, 
     uniqueness :true, 
     format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "please enter a valid email" }
+
+    has_many :reservations, class_name: "Guest"
+    belongs_to :admin through :accomodations
+
 end
